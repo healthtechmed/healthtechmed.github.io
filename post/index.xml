@@ -6,10 +6,20 @@
     <description>Recent content in Posts on Health Tech</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 11 Mar 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 23 May 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Doenças Cardivasculares - Análise Exploratória</title>
+      <link>/doen%C3%A7as-cardivasculares-an%C3%A1lise-explorat%C3%B3ria/</link>
+      <pubDate>Sat, 23 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/doen%C3%A7as-cardivasculares-an%C3%A1lise-explorat%C3%B3ria/</guid>
+      <description>Introdução Compreendendo uma gama diversa de patologias, as doenças cardiovasculares estão entre as mais letais do mundo - com estimativas chegando à 17.9 milhões de mortes anuais segundo a WHO. Os fatores de risco para doenças cardiovasculares como um todo variam de fatores modificáveis - como estilo de vida sedentário - até aqueles não modificáveis - como idade e histórico familiar.
+O objetivo desse tutorial é explorar um banco de dados com 303 pacientes, alguns controle e alguns com alguma doença cardivascular, buscando observar correlações entre nossas variáveis e como elas se relacionam com a literatura atual.</description>
+    </item>
     
     <item>
       <title>Markdown Syntax Guide</title>
