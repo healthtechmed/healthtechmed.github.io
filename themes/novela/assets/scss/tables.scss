@@ -80,3 +80,17 @@ thead{
     -o-transition: var(--color-mode-transition);
     transition: var(--color-mode-transition);
 }
+
+.datatables {
+    padding: 0.5em 0 0 0;
+    
+    align-content: center;
+}
+
+.dataTables_length {
+    padding: 0.5em 0.5em 0.5em 0.5em;
+}
+
+.dataTables_filter {
+    padding: 0.5em 0.5em 0.5em 0.5em;
+}

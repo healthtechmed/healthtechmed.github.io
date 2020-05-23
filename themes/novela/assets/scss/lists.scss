@@ -3,7 +3,7 @@ ul{
     counter-reset: list;
     color: var(--articleText);
     position: relative;
-    padding: 15px 0 30px 30px;
+    padding: 0 0 0 3em;
     -webkit-transition: var(--color-mode-transition);
     -o-transition: var(--color-mode-transition);
     transition: var(--color-mode-transition);

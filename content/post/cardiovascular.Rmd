@@ -1,0 +1,108 @@
+---
+title: Doenças Cardivasculares - Análise Exploratória
+date: 2020-05-23
+hero: "/images/hero-2.jpg"
+excerpt: Explorando um banco de dados de doenças cardiovasculares.
+authors:
+  - Guilherme Almeida
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(DT)
+```
+
+## Introdução
+
+Compreendendo uma gama diversa de patologias, as doenças cardiovasculares estão entre as mais letais do mundo - com estimativas chegando à [17.9 milhões](https://www.who.int/en/news-room/fact-sheets/detail/cardiovascular-diseases-(cvds)) de mortes anuais segundo a WHO. Os fatores de risco para doenças cardiovasculares como um todo variam de fatores modificáveis - como estilo de vida sedentário - até aqueles não modificáveis - como idade e histórico familiar.
+
+O objetivo desse tutorial é explorar um banco de dados com 303 pacientes, alguns controle e alguns com alguma doença cardivascular, buscando observar correlações entre nossas variáveis e como elas se relacionam com a literatura atual.
+
+Esse tutorial é voltado para pessoas na área da saúde com interesse em ciência de dados. Eu sempre buscarei explicar o máximo possível a parte da programação, facilitando o aprendizado e permitindo o foco na análise de dados.
+
+Para realizar as análises, o software de escolha será a linguagem de programação [R](https://www.r-project.org). Leia o [nosso tutorial](/) de como instalar R na sua máquina se você já não o tem instalado.
+
+## Entendendo o Banco de Dados
+
+O primeiro passo, e talvez um dos mais importantes, é conhecer seus dados. Entender _como_ está estruturado o seu banco de dados é fundamental para qualquer análise.
+Para responder essa pergunta e várias outras que faremos no decorrer desse tutorial, utilizaremos um conjunto de ferramentas chamado Tidyverse. Nele nós vamos encontrar ferramentas para carregar, manipular, analisar e plotar o nosso banco de dados.
+
+Vamos carregar o `tidyverse`:
+
+```{r}
+library(tidyverse)
+```
+
+Para trabalhar com o nosso banco de dados, é preciso carregar ele para o R. Utilizaremos o método `read_csv` para salvar nosso banco de dados a uma variável chamada `heart`:
+
+```{r results='hide'}
+heart <- read_csv("data/heart.csv")
+```
+
+Em R, nós damos um valor a uma variável qualquer usando o sintaxe `variavel <- valor`.
+No caso acima, nós lemos o banco de dados do arquivo `heart.csv` e dá esse valor à variável `heart`.
+
+Podemos visualizar a tabela com o código 
+```r
+View(table)
+```
+
+```{r echo=FALSE}
+datatable(heart)
+```
+
+A tabela gerada acima mostra um pouco do nosso banco de dados. Para facilitar o processamento dos dados, a tabela já veio encodificada em números, isto é, o sexo do paciente não é representado por valores de texto como "masculino" e "feminino", mas sim por valores numéricos: 0 representando o sexo feminino e 1 representando o sexo masculino. 
+
+Isso é _extremamente_ comum em ciência de dados pelo simples fato de que computadores não entendem textos muito bem. Para fazer com que o computador consiga entender e analisar os dados, é preciso que eles estejam em forma numérica.
+
+É comum também nomear as colunas com nomes sem espaço ou acentos que são, em um primeiro momento, complicados de interpretar. Mas lendo a especificação do banco de dados, descobrimos que essas são as colunas e seus respectivos significados:
+
+ - `age`: idade do paciente
+ - `sex`: sexo da paciente
+ - `cp`: tipo de dor no peito que o paciente está sentindo (`1` = angina típica, `2` = angina atípica, `3` = dor não classificada como angina e `4` = sem dor)
+ - `trestbps`: pressão sanguínea em repouso
+ - `chol`: colesterol circulante (mg/dl)
+ - `fbs`: hiperglicemia em jejum (> 120mg/dl)
+ - `restecg`: alteração no eletrocardiograma em repouso
+ - `thalach`: frequência cadiaca máxima (bpm)
+ - `exang`: ocorrência de angina em exercírcio
+ - `oldpeak`: depressão em ST em exercírcio
+ - `slope`: tipo da curva ST (cima, baixo ou reta)
+ - `ca`: número de vasos maiores revelados na fluoroscopia (entre 0 e 3)
+ - `target`: presença de doença cardíaca no paciente (`0` = controle, `1` = paciente com doença cardiovascular)
+ 
+ Normalmente, o próximo passo seria pré-processar o banco de dados: remover valores nulos, arrumar colunas inexistentes e todos os problemas que encontrarmos. Por sorte, eses banco de dados já veio pré-processado e pronto pra uso.
+ 
+## Analisando Variações
+
+Existem duas grandes maneiras de explorar o nosso banco de dados, uma sendo a análsie de **variância**, isto é, analisar o comportamento de uma coluna em vários pacientes. A outra seria analisar o comportamento de multiplas colunas em relação a vários pacientes, uma análise de **covariância**.
+
+Antes de começarmos a misturar várias colunas, vamos analisar algumas colunas isoladamente observando a variância delas. Como o banco de dados possui, para cada paciente, a informação se ele tem doença cardíaca ou não. Assim, nós vamos dividir o nosso banco de dados `heart` em dois: `control`, que vai conter apenas os controles, e `disease`, que vai conter apenas os pacientes com doenças cardíacas.
+
+Para separar o nosso banco de dados, nós usaremos o método `filter` para filtrar apenas os pacientes que nós queremos:
+
+```{r}
+control <- heart %>%
+  filter(target == 0)
+
+disease <- heart %>%
+  filter(target == 1)
+```
+
+A parte complicada do código acima é entender o que acontece do lado direito do `<-`. Pegue, por exemplo:
+
+```r
+heart %>%
+  filter(target == 0)
+```
+
+Isso é a maneira de dizer ao R "pegue o nosso banco de dados `heart` e filtre todos os pacientes que tenham a coluna `target` igual a 0. Lembre que a variável `target` indica se o paciente tem doença cardíaca ou não. Agora que nós separamos nosso banco de dados, podemos realizar análises em grupo.
+
+Antes de explorar variáveis específicas como angina e colesterol, vamos observar o comportamento da idade e sexo em relação a esses dois grupos através de gráficos.
+
+No R, a biblioteca `ggplot` permite plotar todo tipo de gráfico que você pode imaginar de uma maneira bem fácil:
+
+```{r}
+ggplot(control) +
+  geom_bar(aes(x = sex, y = ..count.. / sum(..count..)))
+```
