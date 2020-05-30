@@ -37,7 +37,7 @@ Para trabalhar com o nosso banco de dados, é preciso carregar ele para o R. Uti
 
 ```{r results='hide'}
 heart <- read_csv("data/heart.csv") %>%
-  mutate(target = as.integer(target))
+  mutate(target = ordered(target))
 ```
 
 Em R, nós damos um valor a uma variável qualquer usando o sintaxe `variavel <- valor`.
@@ -72,8 +72,38 @@ Isso é _extremamente_ comum em ciência de dados pelo simples fato de que compu
  - `ca`: número de vasos maiores revelados na fluoroscopia (entre 0 e 3)
  - `target`: presença de doença cardíaca no paciente (`0` = controle, `1` = paciente com doença cardiovascular)
  
- Normalmente, o próximo passo seria pré-processar o banco de dados: remover valores nulos, arrumar colunas inexistentes e todos os problemas que encontrarmos. Por sorte, eses banco de dados já veio pré-processado e pronto pra uso.
- 
+## Pré-Processamento
+
+O pré-processamento de um banco de dados é uma etapa crucial quando se trabalha com ciência de dados - um bom pré-processamento é um pré-requisito para uma análise de qualidade. 
+Normalmente, a primeira etapa de um pré-processamento seria lidar com valores nulos, porém esse banco de dados já veio parcialmente pré-processado por outros cientistas de dados, então essa etapa não será necessária. 
+
+Então o que falta fazer?
+
+Bem, em quesito de análise o banco de dados está pronto. Entretanto, nós podemos mudar algumas coisinhas para facilitar a *visualização* dos nossos dados.
+
+Nós sabemos que se a variável `sex` for igual a 0, o paciente é mulher e se for igual a `1`, ele é homem. Mas o R não sabe disso, então ele não vai conseguir usar as palavras "homem" e "mulher" na hora de montar os gráficos.
+
+É muito fácil resolver isso utilizando os [Factors](https://www.datamentor.io/r-programming/factor/) do R.
+
+O **Factor** é um tipo de dado do R que é ideal para representar dados categóricos (como sexo, diagnóstico, tipo de dor) de uma maneira que é interpretável tanto por nós, humanos, como para a máquina. 
+
+As funções `factor` e `ordered` criam, respectivamente, um Factor não ordenado e um ordenado. Vamos tomar exemplo as variáveis de sexo (`sex`) e de número de grandes vasos (`ca`).
+
+Não faz sentido ordenarmos gênero - isto é, "masculino" não é maior ou menor que "feminino". Então nós podemos transformar `sex` em um Factor através da função `factor`.  Entretanto, a existe uma noção de ordenação na variável `ca`: ter três grandes vasos é maior que ter dois. Portanto em `ca`, nós usaremos a função `ordered`.
+
+Para aplicar no nosso banco de dados, utilizamos a função `mutate` em conjunto:
+
+```{r}
+heart <- heart %>%
+  mutate(sex = factor(sex),
+         ca = ordered(ca),
+         target = factor(target),
+         cp = factor(cp),
+         exang = factor(exang),
+         slope = factor(slope),
+         thal = factor(thal))
+```
+
 ## Analisando Variações
 
 Existem duas grandes maneiras de explorar o nosso banco de dados, uma sendo a análsie de **variância**, isto é, analisar o comportamento de uma coluna em vários pacientes. A outra seria analisar o comportamento de multiplas colunas em relação a vários pacientes, uma análise de **covariância**.
@@ -99,9 +129,22 @@ Por fim, as últimas duas linhas são puramente estéticas. Elas dão legendas a
 
 Enfim, voltemos ao gráfico. Como podemos observar, cerca de 70% das pessoas no nosso banco de dados são do sexo masculino e o restante do sexo feminino. Isso não nos diz muito sobre doença cardiovascular, mas nós podemos mudar isso.
 
-Para entender melhor como cada sexo influencia na ocorrência de doença cardiovascular, plotaremos um gráfico de barra onde o eixo X vai, novamente, representar o sexo. Porém agora o eixo Y irá representar o número de pacientes com doença cardiovascular.
+Para entender melhor a distribuição de doenças cardiovasculares em relação ao sexo, vamos plotar um gráfico parecido com o de cima, mas agora nós vamos colorir a barra de cada sexo com a quantidade de controles e pacientes com doenças cardiacas daquele sexo
 
 ```{r}
-ggplot(heart) + 
-  geom_bar(aes(x = sex, y = target), stat = "bin", position = "dodge")
+ggplot(heart, aes(x = sex)) + 
+  geom_bar(aes(y = ..count.. / sum(..count..), fill = target)) +
+  labs(x = "Sexo", y = "Quantidade (%)") +
+  scale_fill_discrete(name = "Diagnóstico", labels = c("Controle", "Doença Cardíaca")) +
+  ggtitle("Distribuição de Doença Cardíaca pelo Sexo")
 ```
+
+A grande diferença do código desse gráfico está na segunda linha, onde nós dizemos ao R como renderizar as barras: 
+```r
+geom_bar(aes(y = ..count.. / sum(..count..), fill = target)) +
+```
+
+Diferentemente do outro gráfico, aqui nós especificamos que o preenchimento de cada barra (`fill`) deve ser dado pela variável `target`. Por fim, a linha que chama a função `scale_fill_discrete` diz ao R o texto da legenda.
+
+No gráfico, é possível observar que o número de pacientes com doença cardíaca está balanceado entre os dois sexos (o tamanho das barras azuis são parecidos), então é possível fazer comparações robustas entre os sexos dentro desse subgrupo.
+
