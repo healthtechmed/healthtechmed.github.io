@@ -36,7 +36,8 @@ library(tidyverse)
 Para trabalhar com o nosso banco de dados, é preciso carregar ele para o R. Utilizaremos o método `read_csv` para salvar nosso banco de dados a uma variável chamada `heart`:
 
 ```{r results='hide'}
-heart <- read_csv("data/heart.csv")
+heart <- read_csv("data/heart.csv") %>%
+  mutate(target = as.integer(target))
 ```
 
 Em R, nós damos um valor a uma variável qualquer usando o sintaxe `variavel <- valor`.
@@ -77,32 +78,30 @@ Isso é _extremamente_ comum em ciência de dados pelo simples fato de que compu
 
 Existem duas grandes maneiras de explorar o nosso banco de dados, uma sendo a análsie de **variância**, isto é, analisar o comportamento de uma coluna em vários pacientes. A outra seria analisar o comportamento de multiplas colunas em relação a vários pacientes, uma análise de **covariância**.
 
-Antes de começarmos a misturar várias colunas, vamos analisar algumas colunas isoladamente observando a variância delas. Como o banco de dados possui, para cada paciente, a informação se ele tem doença cardíaca ou não. Assim, nós vamos dividir o nosso banco de dados `heart` em dois: `control`, que vai conter apenas os controles, e `disease`, que vai conter apenas os pacientes com doenças cardíacas.
+Antes de começarmos a misturar várias colunas, vamos analisar algumas colunas isoladamente observando a variância delas.
 
-Para separar o nosso banco de dados, nós usaremos o método `filter` para filtrar apenas os pacientes que nós queremos:
+Uma maneira interessante de começar a análise desse banco de dados é explorar como o sexo influencia na presença de doença cardiovascular. Para isso, vamos começar analisando apenas a distribuição de pessoas do sexo masculino e feminino no nosso banco de dados:
 
-```{r}
-control <- heart %>%
-  filter(target == 0)
-
-disease <- heart %>%
-  filter(target == 1)
+```{r sex_dist}
+ggplot(heart, aes(x = sex)) + 
+  geom_bar(aes(y = ..count.. / sum(..count..))) +
+  labs(x = "Sexo", y = "Quantidade (%)") +
+  ggtitle("Distribuição do Sexo")
 ```
 
-A parte complicada do código acima é entender o que acontece do lado direito do `<-`. Pegue, por exemplo:
+O processo de criar um gráfico no `ggplot` é divido em linhas de código que vão dizer um aspecto específico do gráfico. É como se cada linha fosse um "bloquinho" que diz um pouco sobre o gráfico, ao empilharmos vários bloquinhos nós temos um gráfico completo.
 
-```r
-heart %>%
-  filter(target == 0)
-```
+A primeira linha, `ggplot(heart, aes(x = sex))`, é uma espécie de base para o resto do gráfico: é nela onde o ambiente `ggplot` é criado com o banco de dados `heart`. Nela nós também dizemos ao R que o eixo X irá representar o sexo (`aes(x = sex)`).
 
-Isso é a maneira de dizer ao R "pegue o nosso banco de dados `heart` e filtre todos os pacientes que tenham a coluna `target` igual a 0. Lembre que a variável `target` indica se o paciente tem doença cardíaca ou não. Agora que nós separamos nosso banco de dados, podemos realizar análises em grupo.
+A segunda linha, `geom_bar(aes(y = ..count.. / sum(..count..)))`, diz ao R que nós queremos criar um gráfico de barra aonde o eixo Y vai ser a razão da quantidade de pessoas de um sexo sobre o total de pessoas, ou seja, a porcentagem de pessoas daquele sexo. Nós usamos a fórmula `..count.. / sum(..count..)` pra calcular essa porcentagem.
 
-Antes de explorar variáveis específicas como angina e colesterol, vamos observar o comportamento da idade e sexo em relação a esses dois grupos através de gráficos.
+Por fim, as últimas duas linhas são puramente estéticas. Elas dão legendas aos eixos X e Y e definem o título do gráfico. Perceba que sempre que nós vamos adicionar uma nova linha de código ao gráfico, é preciso terminar a linha anterior com `+`.
 
-No R, a biblioteca `ggplot` permite plotar todo tipo de gráfico que você pode imaginar de uma maneira bem fácil:
+Enfim, voltemos ao gráfico. Como podemos observar, cerca de 70% das pessoas no nosso banco de dados são do sexo masculino e o restante do sexo feminino. Isso não nos diz muito sobre doença cardiovascular, mas nós podemos mudar isso.
+
+Para entender melhor como cada sexo influencia na ocorrência de doença cardiovascular, plotaremos um gráfico de barra onde o eixo X vai, novamente, representar o sexo. Porém agora o eixo Y irá representar o número de pacientes com doença cardiovascular.
 
 ```{r}
-ggplot(control) +
-  geom_bar(aes(x = sex, y = ..count.. / sum(..count..)))
+ggplot(heart) + 
+  geom_bar(aes(x = sex, y = target), stat = "bin", position = "dodge")
 ```

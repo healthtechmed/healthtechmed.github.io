@@ -6,6 +6,9 @@
       -ms-flex-align: center;
           align-items: center;
   position: relative;
+  
+  text-align: center;
+  
   left: -10px;
 }
 
@@ -13,6 +16,9 @@
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  
+  padding-left: 1em;
+  
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
@@ -73,4 +79,8 @@
 
 .author-avatar{
   width: 100%;
+}
+
+.bio-center {
+  text-align: center;
 }
