@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="icon" href="/images/favicon.svg">
     
-    <link rel="stylesheet" href="/scss/global.min.1d3e06c40b1223fa76d3004e853bd47282cec27bfe8e152b50dafda542cc4f6f.css">
+    <link rel="stylesheet" href="/scss/global.min.6edbadf5ff63eea55311507006567da194f7fdf71cc6d47bec9f7c7b2dcf0617.css">
     
     <link rel="stylesheet" href="/css/prism.css" />
     <link href="https://fonts.googleapis.com/css?family=Merriweather&display=swap" rel="stylesheet">
@@ -141,7 +141,7 @@ O objetivo desse tutorial é explorar um banco de dados com 303 pacientes, algun
 
 <script src="/js/collapseAuthors.js"></script>
                     May 23, 2020
-                    • 5 min read
+                    • 6 min read
                 </div>
             </div>
         </header>
@@ -188,7 +188,8 @@ Para responder essa pergunta e várias outras que faremos no decorrer desse tuto
 ## x dplyr::filter() masks stats::filter()
 ## x dplyr::lag()    masks stats::lag()</code></pre>
 <p>Para trabalhar com o nosso banco de dados, é preciso carregar ele para o R. Utilizaremos o método <code>read_csv</code> para salvar nosso banco de dados a uma variável chamada <code>heart</code>:</p>
-<pre class="r"><code>heart &lt;- read_csv(&quot;data/heart.csv&quot;)</code></pre>
+<pre class="r"><code>heart &lt;- read_csv(&quot;data/heart.csv&quot;) %&gt;%
+  mutate(target = as.integer(target))</code></pre>
 <pre><code>## Parsed with column specification:
 ## cols(
 ##   age = col_double(),
@@ -235,22 +236,21 @@ No caso acima, nós lemos o banco de dados do arquivo <code>heart.csv</code> e d
 <div id="analisando-variações" class="section level2">
 <h2>Analisando Variações</h2>
 <p>Existem duas grandes maneiras de explorar o nosso banco de dados, uma sendo a análsie de <strong>variância</strong>, isto é, analisar o comportamento de uma coluna em vários pacientes. A outra seria analisar o comportamento de multiplas colunas em relação a vários pacientes, uma análise de <strong>covariância</strong>.</p>
-<p>Antes de começarmos a misturar várias colunas, vamos analisar algumas colunas isoladamente observando a variância delas. Como o banco de dados possui, para cada paciente, a informação se ele tem doença cardíaca ou não. Assim, nós vamos dividir o nosso banco de dados <code>heart</code> em dois: <code>control</code>, que vai conter apenas os controles, e <code>disease</code>, que vai conter apenas os pacientes com doenças cardíacas.</p>
-<p>Para separar o nosso banco de dados, nós usaremos o método <code>filter</code> para filtrar apenas os pacientes que nós queremos:</p>
-<pre class="r"><code>control &lt;- heart %&gt;%
-  filter(target == 0)
-
-disease &lt;- heart %&gt;%
-  filter(target == 1)</code></pre>
-<p>A parte complicada do código acima é entender o que acontece do lado direito do <code>&lt;-</code>. Pegue, por exemplo:</p>
-<pre class="r"><code>heart %&gt;%
-  filter(target == 0)</code></pre>
-<p>Isso é a maneira de dizer ao R &quot;pegue o nosso banco de dados <code>heart</code> e filtre todos os pacientes que tenham a coluna <code>target</code> igual a 0. Lembre que a variável <code>target</code> indica se o paciente tem doença cardíaca ou não. Agora que nós separamos nosso banco de dados, podemos realizar análises em grupo.</p>
-<p>Antes de explorar variáveis específicas como angina e colesterol, vamos observar o comportamento da idade e sexo em relação a esses dois grupos através de gráficos.</p>
-<p>No R, a biblioteca <code>ggplot</code> permite plotar todo tipo de gráfico que você pode imaginar de uma maneira bem fácil:</p>
-<pre class="r"><code>ggplot(control) +
-  geom_bar(aes(x = sex, y = ..count.. / sum(..count..)))</code></pre>
-<p><img src="/post/cardiovascular_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<p>Antes de começarmos a misturar várias colunas, vamos analisar algumas colunas isoladamente observando a variância delas.</p>
+<p>Uma maneira interessante de começar a análise desse banco de dados é explorar como o sexo influencia na presença de doença cardiovascular. Para isso, vamos começar analisando apenas a distribuição de pessoas do sexo masculino e feminino no nosso banco de dados:</p>
+<pre class="r"><code>ggplot(heart, aes(x = sex)) + 
+  geom_bar(aes(y = ..count.. / sum(..count..))) +
+  labs(x = &quot;Sexo&quot;, y = &quot;Quantidade (%)&quot;) +
+  ggtitle(&quot;Distribuição do Sexo&quot;)</code></pre>
+<p><img src="/post/cardiovascular_files/figure-html/sex_dist-1.png" width="672" /></p>
+<p>O processo de criar um gráfico no <code>ggplot</code> é divido em linhas de código que vão dizer um aspecto específico do gráfico. É como se cada linha fosse um “bloquinho” que diz um pouco sobre o gráfico, ao empilharmos vários bloquinhos nós temos um gráfico completo.</p>
+<p>A primeira linha, <code>ggplot(heart, aes(x = sex))</code>, é uma espécie de base para o resto do gráfico: é nela onde o ambiente <code>ggplot</code> é criado com o banco de dados <code>heart</code>. Nela nós também dizemos ao R que o eixo X irá representar o sexo (<code>aes(x = sex)</code>).</p>
+<p>A segunda linha, <code>geom_bar(aes(y = ..count.. / sum(..count..)))</code>, diz ao R que nós queremos criar um gráfico de barra aonde o eixo Y vai ser a razão da quantidade de pessoas de um sexo sobre o total de pessoas, ou seja, a porcentagem de pessoas daquele sexo. Nós usamos a fórmula <code>..count.. / sum(..count..)</code> pra calcular essa porcentagem.</p>
+<p>Por fim, as últimas duas linhas são puramente estéticas. Elas dão legendas aos eixos X e Y e definem o título do gráfico. Perceba que sempre que nós vamos adicionar uma nova linha de código ao gráfico, é preciso terminar a linha anterior com <code>+</code>.</p>
+<p>Enfim, voltemos ao gráfico. Como podemos observar, cerca de 70% das pessoas no nosso banco de dados são do sexo masculino e o restante do sexo feminino. Isso não nos diz muito sobre doença cardiovascular, mas nós podemos mudar isso.</p>
+<pre class="r"><code>ggplot(heart) +
+  geom_bar(aes(x = sex, fill = target), position = &quot;fill&quot;)</code></pre>
+<p><img src="/post/cardiovascular_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
 </div>
 
     </article>
