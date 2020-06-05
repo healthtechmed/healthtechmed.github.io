@@ -1,8 +1,8 @@
 ---
-title: Doenças Cardivasculares - Análise Exploratória
-date: 2020-05-23
-hero: "/images/hero-2.jpg"
-excerpt: Explorando um banco de dados de doenças cardiovasculares.
+title: Visualizando Doenças Cardiovasculares com Dados
+date: 2020-06-05
+hero: "/images/heart.png"
+excerpt: Carregando e entendendo um banco de dados de doenças cardiovasculares.
 authors:
   - Guilherme Almeida
 ---
@@ -18,26 +18,37 @@ Compreendendo uma gama diversa de patologias, as doenças cardiovasculares estã
 
 O objetivo desse tutorial é explorar um banco de dados com 303 pacientes, alguns controle e alguns com alguma doença cardivascular, buscando observar correlações entre nossas variáveis e como elas se relacionam com a literatura atual.
 
-Esse tutorial é voltado para pessoas na área da saúde com interesse em ciência de dados. Eu sempre buscarei explicar o máximo possível a parte da programação, facilitando o aprendizado e permitindo o foco na análise de dados.
+Esse tutorial é voltado para pessoas na área da saúde com interesse em ciência de dados. Toda a parte de programação e estatísica será cuidadosamente explicada com esse público em mente.
 
-Para realizar as análises, o software de escolha será a linguagem de programação [R](https://www.r-project.org). Leia o [nosso tutorial](/) de como instalar R na sua máquina se você já não o tem instalado.
+Para realizar as análises, o software de escolha será a linguagem de programação [R](https://www.r-project.org). Leia o [esse tutorial](http://material.curso-r.com/instalacao/) de como instalar a linguagem R e o R Studio na sua máquina se você já não os têm instalado.
+
+Além de ter o R instalado, é preciso baixar o banco de dados que utilizaremos nessa série de tutoriais [aqui](https://www.kaggle.com/ronitf/heart-disease-uci). 
+
+Por fim, vamos instalar as ferramentas que utilizaremos para toda a análise. Basta digitar no console do R, que fica no canto inferior esquerdo do R Studio:
+
+```r
+packages.install("tidyverse")
+packages.install("corrplot")
+```
 
 ## Entendendo o Banco de Dados
 
 O primeiro passo, e talvez um dos mais importantes, é conhecer seus dados. Entender _como_ está estruturado o seu banco de dados é fundamental para qualquer análise.
 Para responder essa pergunta e várias outras que faremos no decorrer desse tutorial, utilizaremos um conjunto de ferramentas chamado Tidyverse. Nele nós vamos encontrar ferramentas para carregar, manipular, analisar e plotar o nosso banco de dados.
 
-Vamos carregar o `tidyverse`:
+Vamos carregar o `tidyverse` e o `corrplot`:
 
 ```{r}
 library(tidyverse)
+library(corrplot)
 ```
 
-Para trabalhar com o nosso banco de dados, é preciso carregar ele para o R. Utilizaremos o método `read_csv` para salvar nosso banco de dados a uma variável chamada `heart`:
+Para trabalhar com o nosso banco de dados, é preciso carregar ele para o R. Utilizaremos o método `read_csv` para salvar nosso banco de dados a uma variável chamada `heart`.
+
+O método `read_csv` espera uma string (texto) indicando o local do arquivo do banco de dados, que no _meu_ caso está em `"data/heart.csv"`, mas muito provavelmente ele estará em um local diferente na sua máquina:
 
 ```{r results='hide'}
-heart <- read_csv("data/heart.csv") %>%
-  mutate(target = ordered(target))
+heart <- read_csv("data/heart.csv")
 ```
 
 Em R, nós damos um valor a uma variável qualquer usando o sintaxe `variavel <- valor`.
@@ -81,9 +92,7 @@ Então o que falta fazer?
 
 Bem, em quesito de análise o banco de dados está pronto. Entretanto, nós podemos mudar algumas coisinhas para facilitar a *visualização* dos nossos dados.
 
-Nós sabemos que se a variável `sex` for igual a 0, o paciente é mulher e se for igual a `1`, ele é homem. Mas o R não sabe disso, então ele não vai conseguir usar as palavras "homem" e "mulher" na hora de montar os gráficos.
-
-É muito fácil resolver isso utilizando os [Factors](https://www.datamentor.io/r-programming/factor/) do R.
+Para que algumas visualizações funcionem bem, é preciso transformar algumas variáveis para um tipo de dado que o R entende bem: [Factors](https://www.datamentor.io/r-programming/factor/).
 
 O **Factor** é um tipo de dado do R que é ideal para representar dados categóricos (como sexo, diagnóstico, tipo de dor) de uma maneira que é interpretável tanto por nós, humanos, como para a máquina. 
 
@@ -104,47 +113,117 @@ heart <- heart %>%
          thal = factor(thal))
 ```
 
+Agora que nossos dados estão bem pré-processados, vamos começar a visualizá-los!
+
 ## Analisando Variações
 
 Existem duas grandes maneiras de explorar o nosso banco de dados, uma sendo a análsie de **variância**, isto é, analisar o comportamento de uma coluna em vários pacientes. A outra seria analisar o comportamento de multiplas colunas em relação a vários pacientes, uma análise de **covariância**.
 
 Antes de começarmos a misturar várias colunas, vamos analisar algumas colunas isoladamente observando a variância delas.
 
-Uma maneira interessante de começar a análise desse banco de dados é explorar como o sexo influencia na presença de doença cardiovascular. Para isso, vamos começar analisando apenas a distribuição de pessoas do sexo masculino e feminino no nosso banco de dados:
+Uma pergunta básica para fazer ao nosso banco de dados é: qual é a distribuição de sexo e de idade nele? É importante ter em mente essas distribuições para entender os limites de qualquer insight aqui produzido.
 
-```{r sex_dist}
-ggplot(heart, aes(x = sex)) + 
+Para observar essas distribuições, podemos visualizá-las utilizando da biblioteca `ggplot`. Começando pelo sexo, o código básico para visualizar a quantidade de indivíduos de cada sexo como um gráfico de barra seria esse:
+
+```{r}
+ggplot(heart, aes(x = sex)) +
   geom_bar(aes(y = ..count.. / sum(..count..))) +
   labs(x = "Sexo", y = "Quantidade (%)") +
   ggtitle("Distribuição do Sexo")
 ```
 
-O processo de criar um gráfico no `ggplot` é divido em linhas de código que vão dizer um aspecto específico do gráfico. É como se cada linha fosse um "bloquinho" que diz um pouco sobre o gráfico, ao empilharmos vários bloquinhos nós temos um gráfico completo.
+O processo de criar um gráfico no `ggplot` é divido em linhas de código que vão dizer um aspecto específico do gráfico. É como se cada linha fosse um “bloquinho” que diz um pouco sobre o gráfico. Ao empilharmos vários bloquinhos nós temos um gráfico completo.
 
-A primeira linha, `ggplot(heart, aes(x = sex))`, é uma espécie de base para o resto do gráfico: é nela onde o ambiente `ggplot` é criado com o banco de dados `heart`. Nela nós também dizemos ao R que o eixo X irá representar o sexo (`aes(x = sex)`).
+A primeira linha, `ggplot(heart, aes(x = sex))`, é uma espécie de base para o resto do gráfico: é nela onde o ambiente ggplot é criado com o banco de dados heart. Nela nós também dizemos ao R que o eixo X irá representar o sexo `(aes(x = sex))`.
 
 A segunda linha, `geom_bar(aes(y = ..count.. / sum(..count..)))`, diz ao R que nós queremos criar um gráfico de barra aonde o eixo Y vai ser a razão da quantidade de pessoas de um sexo sobre o total de pessoas, ou seja, a porcentagem de pessoas daquele sexo. Nós usamos a fórmula `..count.. / sum(..count..)` pra calcular essa porcentagem.
 
-Por fim, as últimas duas linhas são puramente estéticas. Elas dão legendas aos eixos X e Y e definem o título do gráfico. Perceba que sempre que nós vamos adicionar uma nova linha de código ao gráfico, é preciso terminar a linha anterior com `+`.
+Por fim, as últimas duas linhas são puramente estéticas. Elas dão legendas aos eixos X e Y e definem o título do gráfico. Perceba que sempre que nós vamos adicionar uma nova linha de código ao gráfico, é preciso terminar a linha anterior com +.
 
-Enfim, voltemos ao gráfico. Como podemos observar, cerca de 70% das pessoas no nosso banco de dados são do sexo masculino e o restante do sexo feminino. Isso não nos diz muito sobre doença cardiovascular, mas nós podemos mudar isso.
+Para visualizar a distribuição de idade o processo é parecido. A grande diferença é que a idade é um tipo de dado contínuo, enquanto o sexo é discreto.
 
-Para entender melhor a distribuição de doenças cardiovasculares em relação ao sexo, vamos plotar um gráfico parecido com o de cima, mas agora nós vamos colorir a barra de cada sexo com a quantidade de controles e pacientes com doenças cardiacas daquele sexo
+Existem vários métodos que permitem visualizar a distribuição de dados contínuos, aqui nós vamos utilizar o histograma, que é um primo do gráfico de barras utilizado acima.
 
 ```{r}
-ggplot(heart, aes(x = sex)) + 
-  geom_bar(aes(y = ..count.. / sum(..count..), fill = target)) +
-  labs(x = "Sexo", y = "Quantidade (%)") +
-  scale_fill_discrete(name = "Diagnóstico", labels = c("Controle", "Doença Cardíaca")) +
-  ggtitle("Distribuição de Doença Cardíaca pelo Sexo")
+ggplot(heart, aes(x = age, y = ..count.. / sum(..count..))) +
+  geom_histogram(binwidth = 5) +
+  labs(x = "Idade", y = "Quantidade (%)") +
+  ggtitle("Distribuição da Idade")
 ```
 
-A grande diferença do código desse gráfico está na segunda linha, onde nós dizemos ao R como renderizar as barras: 
+O código é bem parecido, mas o invés de utilizar a função `geom_bar`, utilizamos a função `geom_histogram`, que diz ao R que nós queremos desenhar um gráfico de histograma.
+
+Na segunda linha, nós passamos o parâmetro `binwidth = 5` para a função de histograma, isso quer dizer que ele vai agrupar as idades em grupos de 5 anos.
+
+As distribuiçãos da idade e do sexo do nosso banco de dados são informações exentremamente relevantes, mas elas por si só não dizem muito sobre doença cardíaca.
+Para gerar insights desse problema, vamos começar a correlacionar variáveis com o objetivo de encontrar links interessantes que possam dizer algo sobre esse problema.
+
+## Enfim, Correlações
+
+Um primeiro passo para investigar as correlações - isto é, investigar como os nossos dados se relacionam entre si - é justamente calcular a **matriz de correlação**.
+
+Uma matriz de correlação é computada ao calcular, para cada variável, qual é a sua correlação com todas as outras variáveis do banco de dados.  O resultado é uma matriz onde cada elemento vai ser o **coeficiente de correlação** entre duas colunas.
+
+Existem _vários_ métodos que vão calcular o nível de correlação entre colunas, cada um com sua interpretação diferente. Uma bem comum de se usar no começo é o [método de Pearson](https://pt.wikipedia.org/wiki/Coeficiente_de_correlação_de_Pearson).
+
+Para calcular essa matriz de correlação (no nosso código chamada de `cor_mat`), utilizamos:
+
+```{r}
+cor_matrix <- heart %>%
+  mutate_if(is.factor, ~ as.numeric(as.character(.x))) %>%
+  cor(method = "pearson")
+```
+
+Esse código é um pouco denso, vamos destrinchá-lo. 
+
+A primeira linha cria uma variável `cor_matrix` e diz que o valor dela será o resultado das operações feitas nas duas linhas seguintes.
+A segunda linha vai transformar todos os fatores do banco de dados `heart` em números, isso é necessário para calcular a matriz de correlação.
+Por fim, a função `cor(method = "pearson")` calcula a matriz de correlação pelo método Pearson.
+
+Podemos visualizar a matriz de correlação com
 ```r
-geom_bar(aes(y = ..count.. / sum(..count..), fill = target)) +
+View(cor_matrix)
 ```
 
-Diferentemente do outro gráfico, aqui nós especificamos que o preenchimento de cada barra (`fill`) deve ser dado pela variável `target`. Por fim, a linha que chama a função `scale_fill_discrete` diz ao R o texto da legenda.
+```{r echo=FALSE}
+datatable(cor_matrix)
+```
 
-No gráfico, é possível observar que o número de pacientes com doença cardíaca está balanceado entre os dois sexos (o tamanho das barras azuis são parecidos), então é possível fazer comparações robustas entre os sexos dentro desse subgrupo.
+O método de Pearson é ideal para observar correlações lineares e podemos interpretar seus coeficientes da seguinte maneira:
 
+ - Valores próximos a `1.0` indicam uma correlação linear **positiva**
+ - Valores próximos a `0.0` indicam que **não há correlação** linear
+ - Valores próximos a `-1.0` indicam uma correlação linear **negativa**
+ 
+Para facilitar a visualização dessa matriz, nós podemos gerar um gráfico chamado mapa de calor (_heatmap_, em inglês) das nossas correlações com o seguinte código:
+
+```{r}
+corrplot(cor_matrix, method = "color", type = "lower", diag = FALSE)
+```
+
+Nesse gráfico, nós podemos observar que o eixo X e Y representam as colunas do nosso banco de dados. Na intersecção de cada uma dessas colunas, podemos observar um quadradinho colorido. É justamente a cor desse quadrado que vai representar a relação entre duas colunas.
+
+Quanto mais azul o quadrado, maior a correlação positiva entre duas colunas. De maneira análoga, quanto mais vermelho o quadrado, maior a correlação negativa entre duas colunas. Quadrados esbranquiçados indicam que não há correlação entre essas duas colunas.
+
+Por exemplo, se observarmos a intersecção da variável `oldpeak` com `slope`, vemos que o quadrado é bem vermelho - elas estão correlacionadas negativamente.
+Traduzindo para termos da área de saúde, o valor da depressão do segmento ST está correlacionado com o tipo do segmento ST observado.
+
+É possível visualizar melhor essa relação por um gráfico de densidade:
+
+```{r}
+ggplot(heart) +
+  geom_density(aes(x = oldpeak, fill = slope), alpha = 0.5) +
+  labs(title = "Distribuição da Depressão ST", x = "Valor da Depressão", y = "Densidade") +
+  scale_fill_discrete(name = "Tipo de Segmento ST", labels = c("Ascendente", "Descendente", "Reta"))
+```
+
+Segmentos ST retos (em azul) tendem a ter valores de depressão menores que segmentos descendentes e ascendentes. É curioso que segmentos ST ascendentes tendem a ter um valor de depressão maior que os decendentes.
+
+Outra correlação que é possível observar é que indivíduos com frequências cardíacas máximas (`thalach`) maiores estão positivamente correlacionados com a presença de doença cardíaca (`target`):
+
+```{r}
+ggplot(heart) +
+  geom_density(aes(x = thalach, fill = target), alpha = 0.5) +
+  labs(title = "Distribuição da Frequência Cardíaca Máxima", x = "Frequência Cardíaca Máxima (BPM)", y = "Densidade") +
+  scale_fill_discrete(name = "Grupo", labels = c("Controle", "Doença Cardíaca"))
+```
