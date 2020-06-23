@@ -320,7 +320,7 @@ Traduzindo para termos da área de saúde, o valor da depressão do segmento ST 
 <pre class="r"><code>ggplot(heart) +
   geom_density(aes(x = oldpeak, fill = slope), alpha = 0.5) +
   labs(title = &quot;Distribuição da Depressão ST&quot;, x = &quot;Valor da Depressão&quot;, y = &quot;Densidade&quot;) +
-  scale_fill_discrete(name = &quot;Tipo de Segmento ST&quot;, labels = c(&quot;Ascendente&quot;, &quot;Descendente&quot;, &quot;Reta&quot;))</code></pre>
+  scale_fill_discrete(name = &quot;Tipo de Segmento ST&quot;, labels = c(&quot;Ascendente&quot;, &quot;Descendente&quot;, &quot;Reto&quot;))</code></pre>
 <p><img src="/post/cardiovascular_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
 <p>Segmentos ST retos (em azul) tendem a ter valores de depressão menores que segmentos descendentes e ascendentes. É curioso que segmentos ST ascendentes tendem a ter um valor de depressão maior que os decendentes.</p>
 <p>Outra correlação que é possível observar é que indivíduos com frequências cardíacas máximas (<code>thalach</code>) maiores estão positivamente correlacionados com a presença de doença cardíaca (<code>target</code>):</p>
@@ -340,6 +340,10 @@ Traduzindo para termos da área de saúde, o valor da depressão do segmento ST 
 
 
 
+    
+    
+    
+
 
 
 
@@ -353,8 +357,28 @@ Traduzindo para termos da área de saúde, o valor da depressão do segmento ST 
     <div class="next-articles-grid" numberOfArticles={numberOfArticles}>
         <div class="post-row">
             
-                <a href="/visualizando-doen%C3%A7as-cardiovasculares-com-dados/" class="article-link"
+                <a href="/uma-breve-introdu%C3%A7%C3%A3o/" class="article-link"
                  id="article-link-bigger">
+                    <div>
+                        <div class="image-container">
+                            <img src="/images/abstract_art.png" class="article-image" />
+                        </div>
+                        <div>
+                            <h2 class="article-title">
+                                Uma Breve Introdução
+                            </h2>
+                            <p class="article-excerpt">
+                                Quem é a HealthTech?
+                            </p>
+                            <div class="article-metadata">
+                                May 5, 2020 · 1 min read
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            
+                <a href="/visualizando-doen%C3%A7as-cardiovasculares-com-dados/" class="article-link"
+                >
                     <div>
                         <div class="image-container">
                             <img src="/images/heart.png" class="article-image" />

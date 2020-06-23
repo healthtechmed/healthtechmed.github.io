@@ -6,13 +6,7 @@ avatar: /images/eu.png
 featured: true
 social:
   - title: github
-    url: https://github.com
-  - title: github
-    url: https://github.com
-  - title: github
-    url: https://github.com
-  - title: github
-    url: https://github.com
-  - title: github
-    url: https://github.com
+    url: https://github.com/naccib/
+  - title: instagram
+    url: https://www.instagram.com/seanoise_/
 ---

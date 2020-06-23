@@ -214,12 +214,12 @@ Traduzindo para termos da área de saúde, o valor da depressão do segmento ST 
 ggplot(heart) +
   geom_density(aes(x = oldpeak, fill = slope), alpha = 0.5) +
   labs(title = "Distribuição da Depressão ST", x = "Valor da Depressão", y = "Densidade") +
-  scale_fill_discrete(name = "Tipo de Segmento ST", labels = c("Ascendente", "Descendente", "Reta"))
+  scale_fill_discrete(name = "Tipo de Segmento ST", labels = c("Ascendente", "Descendente", "Reto"))
 ```
 
 Segmentos ST retos (em azul) tendem a ter valores de depressão menores que segmentos descendentes e ascendentes. É curioso que segmentos ST ascendentes tendem a ter um valor de depressão maior que os decendentes.
 
-Outra correlação que é possível observar é que indivíduos com frequências cardíacas máximas (`thalach`) maiores estão positivamente correlacionados com a presença de doença cardíaca (`target`):
+Outra correlação que é possível observar é que indivíduos com frequências cardíacas máximas (`thalach`) maiores estão positivamente correlacionados codm a presença de doença cardíaca (`target`):
 
 ```{r}
 ggplot(heart) +
