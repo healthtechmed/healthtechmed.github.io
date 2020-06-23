@@ -6,10 +6,20 @@
     <description>Recent content in Posts on Health Tech</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 05 Jun 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 23 Jun 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Data Science e Saúde</title>
+      <link>/data-science-e-sa%C3%BAde/</link>
+      <pubDate>Tue, 23 Jun 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/data-science-e-sa%C3%BAde/</guid>
+      <description>Considerações Iniciais print(“Olá Mundo DataScience!”)
+Big Data, Data Science, machine learning, inteligência artificial (IA), deep learning, bom, os termos e conceitos se estendem ao infinito, mas por qual motivo precisamos saber disso? Afinal, eu preciso aprender Anatomia, Fisiologia, Patologia, Semiologia e Epidemiologia (sim, os 700 slides daquela aula às 07h da manhã serão importantes, vai ter que aprender não tem jeito) e preciso me preocupar também em aprender toda essa coisa de nerd aí?</description>
+    </item>
     
     <item>
       <title>Visualizando Doenças Cardiovasculares com Dados</title>
