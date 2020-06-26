@@ -6,10 +6,20 @@
     <description>Recent content in Guilherme Almeida on Health Tech</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 05 Jun 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 26 Jun 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/authors/guilherme-almeida/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Ciência de Dados, IA e Machine Learning - qual é a diferença?</title>
+      <link>/ci%C3%AAncia-de-dados-ia-e-machine-learning-qual-%C3%A9-a-diferen%C3%A7a/</link>
+      <pubDate>Fri, 26 Jun 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/ci%C3%AAncia-de-dados-ia-e-machine-learning-qual-%C3%A9-a-diferen%C3%A7a/</guid>
+      <description>Introdução Quando comecei a estudar ciência de dados, eu demorei um bom tempo para entender a diferença entre ela, inteligência artificial (IA) e aprendizado de máquina (machine learning, no 🇺🇸). De fato, essas áreas estão fortemente relacionadas, porém existem diferenças entre elas que são cruciais para trabalhar com ciência de dados.
+Ciência de Dados A ciência de dados é uma grande área de estudo que utiliza de métodos estatísticos para visualizar e entender dados empíricos e tirar sentido deles - os famosos insights.</description>
+    </item>
     
     <item>
       <title>Visualizando Doenças Cardiovasculares com Dados</title>
