@@ -25,7 +25,7 @@ E é aí que entra a Ciência de Dados (Data Science, em inglês), para que um c
 
 Dito isso, onde essa tal de Ciência de Dados se relaciona com as Ciências da Saúde? Bom, a resposta já foi dada, só fazemos ciência com dados e informações. E as técnicas estatísticas e computacionais da ciência de dados é um motor potente do avanço do nosso entendimento em saúde e consequentemente da sua promoção e aplicação terapêutica.
 
-Agora a associação é evidente, os dados biológicos, epidemiológicos, sociais e econômicos podem ser manipulados pelas ferramentas que a ciência de dados possibilita e gerar informação que será usada na Medicina, por exemplo, para auxiliar um cirurgião se vai ser benéfico para o paciente o prodimento, permite também o acompanhmento individualizado do paciente por meio de seu smarthwatch (que mede sua frequência e padrão respiratório) possibilitando assim um melhor entendimento do quadro clínico e melhores abordagens no tratamento.
+Agora a associação é evidente, os dados biológicos, epidemiológicos, sociais e econômicos podem ser manipulados pelas ferramentas que a ciência de dados possibilita e gerar informação que será usada na Medicina, por exemplo, para auxiliar um cirurgião a dicernir se vai ser benéfico para o paciente um procedimento, permite também o acompanhamento individualizado do paciente por meio de seu smarthwatch (que mede sua frequência e padrão respiratório) possibilitando assim um melhor entendimento do quadro clínico e melhores abordagens no tratamento.
 
 ## Isso é muito interessante. Mas por qual motivo eu deveria saber disso?
 
