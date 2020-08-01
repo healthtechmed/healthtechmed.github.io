@@ -1,0 +1,322 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="icon" href="/images/favicon.svg">
+    
+    <link rel="stylesheet" href="/scss/global.min.084c51d5504c41fbaca62c47b15d32f1b2949b2126b1faf30d1e25efae9e2c35.css">
+    
+    <link rel="stylesheet" href="/css/prism.css" />
+    <link href="https://fonts.googleapis.com/css?family=Merriweather&display=swap" rel="stylesheet">
+    
+
+ 
+
+
+
+
+
+
+	
+
+
+
+
+<title>Um pouco de números aos textos e um tanto de texto ao contexto | Health Tech</title>
+<meta name="description" content="Introdução Bem, compreender as diferenças entre os termos e seus significados no data science é essencial para fundamentar tudo que virá depois disso. Seja entender as diferentes técnicas aplicadas em métodos de artigos científicos, ou na possibilidade de uso destas nos contextos de gestão hospitalar ou da medicina de precisão. As aplicações de ML, por exemplo, não estarão exaustivamente listadas em qualquer artigo, afinal, ela é, em si, uma área em desenvolvimento e suas aplicações se extenderão, de tempos em tempos, não só no contexto da medicina, como em outras áreas.">
+<meta property="og:title" content="Um pouco de números aos textos e um tanto de texto ao contexto | Health Tech">
+<meta property="og:site_name" content="Health Tech">
+<meta property="og:description" content="Introdução Bem, compreender as diferenças entre os termos e seus significados no data science é essencial para fundamentar tudo que virá depois disso. Seja entender as diferentes técnicas aplicadas em métodos de artigos científicos, ou na possibilidade de uso destas nos contextos de gestão hospitalar ou da medicina de precisão. As aplicações de ML, por exemplo, não estarão exaustivamente listadas em qualquer artigo, afinal, ela é, em si, uma área em desenvolvimento e suas aplicações se extenderão, de tempos em tempos, não só no contexto da medicina, como em outras áreas.">
+<meta property="og:url" content="/um-pouco-de-n%C3%BAmeros-aos-textos-e-um-tanto-de-texto-ao-contexto/">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content='/images/theoryofeverything_folio10.jpg'><meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Um pouco de números aos textos e um tanto de texto ao contexto | Health Tech">
+
+	<link rel="canonical" href="/um-pouco-de-n%C3%BAmeros-aos-textos-e-um-tanto-de-texto-ao-contexto/">
+
+
+	<meta name="twitter:description" content="Introdução Bem, compreender as diferenças entre os termos e seus significados no data science é essencial para fundamentar tudo que virá depois disso. Seja entender as diferentes técnicas aplicadas em métodos de artigos científicos, ou na possibilidade de uso destas nos contextos de gestão hospitalar ou da medicina de precisão. As aplicações de ML, por exemplo, não estarão exaustivamente listadas em qualquer artigo, afinal, ela é, em si, uma área em desenvolvimento e suas aplicações se extenderão, de tempos em tempos, não só no contexto da medicina, como em outras áreas.">
+<meta name="twitter:image" content="/images/theoryofeverything_folio10.jpg">
+<meta property="article:published_time" content="2020-08-01T00:00:00&#43;00:00">
+	<meta property="article:updated_time" content="2020-08-01T00:00:00&#43;00:00">
+
+
+
+    <link rel="stylesheet"
+      href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/styles/default.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/highlight.min.js"     ></script>
+    
+    <script>hljs.initHighlightingOnLoad();</script>
+</head>
+
+
+<body class="line-numbers">
+
+    
+    <script src="/js/initColors.js"></script>
+
+    <div class="layout-styled">
+
+        <Section class="section">
+  <div class="nav-container">
+    <a class="logo-link" href="/">
+      <div id="logo-desktop">
+   <img src="/images/HealthTechLogo.png">
+</div>
+<div id="logo-mobile" class="hidden">
+   <img src="/images/HealthTechLogo.png">
+</div>
+      <span class="header-hidden">Navigate back to the homepage</span>
+    </a>
+    <div class="nav-controls">
+      <button id="copyButton" class="icon-wrapper">
+        <svg
+    class="icon-image"
+    width="24"
+    height="20"
+    viewBox="0 0 24 20"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    >
+    <path
+      fillRule="evenodd"
+      clipRule="evenodd"
+      d="M2 5C2 3.34328 3.34328 2 5 2H14C15.6567 2 17 3.34328 17 5V9C17 10.6567 15.6567 12 14 12H10C9.44771 12 9 12.4477 9 13C9 13.5523 9.44771 14 10 14H14C16.7613 14 19 11.7613 19 9V5C19 2.23872 16.7613 0 14 0H5C2.23872 0 0 2.23872 0 5V9C0 10.4938 0.656313 11.8361 1.6935 12.7509C2.10768 13.1163 2.73961 13.0767 3.10494 12.6625C3.47028 12.2483 3.43068 11.6164 3.0165 11.2511C2.39169 10.6999 2 9.89621 2 9V5ZM7 11C7 9.34328 8.34328 8 10 8H14C14.5523 8 15 7.55228 15 7C15 6.44772 14.5523 6 14 6H10C7.23872 6 5 8.23872 5 11V15C5 17.7613 7.23872 20 10 20H19C21.7613 20 24 17.7613 24 15V11C24 9.50621 23.3437 8.16393 22.3065 7.24906C21.8923 6.88372 21.2604 6.92332 20.8951 7.3375C20.5297 7.75168 20.5693 8.38361 20.9835 8.74894C21.6083 9.30007 22 10.1038 22 11V15C22 16.6567 20.6567 18 19 18H10C8.34328 18 7 16.6567 7 15V11Z"
+      fill="#000"
+    />
+</svg>
+        <div id="toolTip" class="tool-tip " >
+            copied
+        </div>
+        <input id="copyText" style="opacity: 0;" type="text" class="tool-tip " />
+      </button>
+
+    </div>
+</div>
+</Section>
+
+
+<script src="/js/toggleLogos.js"></script>
+
+
+<script src="/js/toggleColors.js"></script>
+
+
+<script src="/js/copyUrl.js"></script>
+
+        
+
+<section class="section narrow">
+
+    <section id="articleHero" class="section narrow">
+    <div class="article-hero">
+        <header class="article-header">
+            <h1 class="article-hero-heading">Um pouco de números aos textos e um tanto de texto ao contexto</h1>
+            <div class="article-hero-subtitle">
+                <div class="article-meta">
+                    
+
+
+    
+            <a href="/authors/lucas-menezes/" class="article-author-link">
+                
+                    <div class="article-author-avatar">
+                        <img src="/images/lucas.jpg" />
+                    </div>
+                
+                
+                <strong>Lucas Menezes</strong>
+                
+                <span class="hide-on-mobile">,&nbsp;</span>
+            </a>
+    
+
+
+
+<script src="/js/collapseAuthors.js"></script>
+                    August 1, 2020
+                    • 6 min read
+                </div>
+            </div>
+        </header>
+        
+        
+    </div>
+</section>
+
+
+    
+
+    <article  id="articleContent" class="post-content" style="position:relative;">
+        
+
+
+<div id="introdução" class="section level1">
+<h1>Introdução</h1>
+<p>Bem, compreender as diferenças entre os termos e seus significados no <em>data science</em> é essencial para fundamentar tudo que virá depois disso. Seja entender as diferentes técnicas aplicadas em métodos de artigos científicos, ou na possibilidade de uso destas nos contextos de gestão hospitalar ou da medicina de precisão. As aplicações de ML, por exemplo, não estarão exaustivamente listadas em qualquer artigo, afinal, ela é, em si, uma área em desenvolvimento e suas aplicações se extenderão, de tempos em tempos, não só no contexto da medicina, como em outras áreas.</p>
+<p>Provavelmente, se você ouviu falar de <em>data science</em>, a palavra aprendizado de máquina deve ter sido sugerida em algum momento. Mas será que esse é o carro chefe do <em>data science</em> ou das demais áreas relacionadas ao DS?</p>
+<p><em>Bien, ma chérie</em>, se você está por aqui, de alguma maneira sabe a resposta para essa pergunta: não. Então, por que não requintar o conhecimento em DS com um pouco de literatura, passar do não-tão-necessariamente-técnico ao talvez-tão-técnico-que-eu-deveria-estar-me-questionando-o-porquê-de-estar-lendo-isso. Em qualquer ponto pode-se parar essa degustação, basta saber o quanto lhe farta cada tipo de conhecimento.</p>
+<p>Sigamos?</p>
+<div id="lapéritif-ou-onde-quero-atuar" class="section level2">
+<h2><em>L’apéritif</em>: Ou, onde quero atuar?</h2>
+<p>Particularmente, não me vejo como <em>data scientist</em>. A ciência de dados se trata de uma área ampla, que mescla conhecimentos da computação e da estatística, e subidivide-se em ramos de conhecimento mais específicos. Esses ramos vão desde áreas exclusivamente preocupadas com a gestão e manutenção de dados, ou obtenção dos mesmos, ou com suas respectivas visualizações, análises e apresentações.</p>
+<p>Enfim, como em qualquer área, a especialização serve ao propósito de otimizar o trabalho, desenvolver seus paradigmas de atuação e conhecimentos relativos a esses paradigmas. Nesse sentido, um cientista de dados <em>full stack</em> é algo bem árduo de ser definido. Dificilmente alcançável, também.</p>
+<p>Minha resposta a isso é: meu interesse se encontra nas áreas de estatística computacional e computação estatística, áreas que podem muito bem serem entendidas como <em>subsets</em> da ciência de dados. Então, se você está interessado em entender e analisar por si dados em <em>health</em> ou <em>life sciences</em>, talvez seja bom compreender em que ponto dessa vasta área sua fome por conhecimento se encaixe.</p>
+<p>Mas esse tópico está aqui apenas para papearmos e abrirmos nosso apetite.</p>
+<p>Próximo prato?</p>
+</div>
+<div id="lamuse-gueule-ou-o-que-preciso-saber-antes-de-seguir" class="section level2">
+<h2><em>L’amuse-gueule</em>: Ou, o que preciso saber antes de seguir?</h2>
+<p>Toda análise de dados tem de ser provida de intencionalidade. Não podemos partir do ponto de vista do <em>não sei o que buscar, então vou buscar o que procurar</em>. A frase fez sentido para você? Então imagine por que isso faria sentido em qualquer contexto prático.</p>
+<p>Mesmo antes de ser coletado, um dado é obtido com um objetivo, por ser produzido em um contexto experimental ou por sua obtenção através de um estudo observacional. Tudo bem, existem contextos nos quais o dado não é tão estruturado como nesses casos. O <em>text mining</em> é um deles, mas a menos que você esteja produzindo algo em Infodemiologia, dificilmente terá de lidar com esse tipo de dado e análise.</p>
+<p>Mas não precisamos nos restringir às aplicações que já existem, não é mesmo? A ideia é inovar.</p>
+<p>Bem, papo vai, papo vem, mas do que realmente precisamos? Como disse, a análise de dados acontece em um contexto de intenções, expectativas e comprovações (ou não) destas. Uma imagem que bem explicita o fato é a do livro <a href="https://leanpub.com/artofdatascience">The Art of Data Science</a>:</p>
+<div class="figure">
+<img src="/images/2_1_Full_Intro-to-Data-Science-e1486482232872-776x1024.jpg" alt="" />
+<p class="caption">Data Science Workflow</p>
+</div>
+<p>Dessa forma, precisamos saber quais insights <em>podemos</em> e <em>queremos</em> estabelecer com nossos dados. Nesse sentido, aprender as ferramentas de análise é o primeiro passo. Teoria da Probabilidade e Inferência são, de longe, os primeiros tópicos mais interessantes a serem aprendidos por quem gostaria de saber quais hipóteses podem ser fundamentadas e testadas de maneira mais preliminar após a avaliação de alguns pressupostos.</p>
+<p>Então, por que, em um primeiro momento, não minimizar a quantidade de matemática envolvida nesse aprendizado? Provavelmente não vai beneficiar em muito o quanto você quer avançar e talvez até crie uma resistência. Assim sendo, vamos a primeira indicação:</p>
+<p><img src="/images/413+hqWm2hL._SX258_BO1,204,203,200_.jpg" /></p>
+<p>Essa primeira indicação tem uma ampla abordagem de análises utilizadas em <em>health sciences</em> com uma abordagem didática e unicamente conceitual. Então, a matemática nesse livro será a mínima possível. Outra indicação pertinente, em língua portuguesa, seria:</p>
+<p><img src="/images/51mDB+5MPKL.jpg" /></p>
+<p>Dificilmente a abordagem desse livro será tão próxima a um panorama geral de análises e pressupostos mais específicos das <em>health sciences</em>, tendo em vista que a Psicologia se encontra mais próxima dos tipos de análises das ciências sociais e sociais aplicadas. No entanto, a introdução aos tipos de análises mais comuns ainda se mantém válido. E, por ser um material na língua nativa, é ainda mais bem vindo.</p>
+<div id="mas-e-se-eu-quiser-uma-introdução-um-pouco-mais-matemática" class="section level3">
+<h3>Mas e se eu quiser uma introdução um pouco mais matemática?</h3>
+<p>Nesse caso, seguem duas indicações.</p>
+<p><img src="/images/517HnCGznHL.jpg" /></p>
+<p>O livro do DeGroot provavelmente é um dos mais seminais na introdução à Teoria da Probabilidade e Estatística Inferencial. Tem uma abordagem introdutória em uma ampla gama de tópicos, cobrindo desde os conceitos de probabilidade, estimadores, testes de hipóteses, modelos lineares e simulação. Tudo isso acompanhado de uma formalização matemática mais robusta que nas indicações anteriores, claro.</p>
+<p>Para quem prefere uma literatura em língua portuguesa, a recomendação que tenho seria o livro do Luiz Gonzaga Morettin.</p>
+<p><img src="/images/estatistica-basica-probabilidade-e-inferncia-vol-unico-D_NQ_NP_833772-MLB28026234251_082018-F.jpg" /></p>
+<p>Essa indicação não tem uma cobertura de grande parte dos tópicos, mas dá um entendimento introdutório à Teoria da Probabilidade e Inferência. Se pudesse comparar de alguma maneira ao DeGroot, diria que cobre até a metade dos tópicos abordados neste.</p>
+</div>
+</div>
+</div>
+<div id="e-para-o-próximo-momento" class="section level1">
+<h1>E para o próximo momento?</h1>
+<p>Bem, aqui foi uma (não tão) breve amostra de alguns dos livros mais didáticos para quem é basicamente agnóstico na estatística e gostaria de ter uma breve introdução a quase tudo que comumente se usa nas <em>health sciences</em>. Esses são livros mais teóricos, puramente voltados a Estatística.</p>
+<p>Então, esse post servirá mais como um <em>cautionary tale</em> do que o foco das nossas discussões, tendo em vista que o que nos importa é a abordagem computacional dessas ferramentas.</p>
+<p>Algo a ser lembrado, é que esses foram livros com os quais tive contato durante meu aprendizado auto-didata. Então, quaisquer recomendações são gratas e mais que bem vindas.</p>
+<p>Para nosso próximo momento, ficam as referências que falam mais especificamente da análise de dados nas linguagens do DS: Python e R. E uma aposta do autor desse post: Julia!</p>
+<p>Então, até lá!</p>
+</div>
+<div id="uma-amostra-grátis" class="section level1">
+<h1>Uma amostra grátis</h1>
+<p>Além da literatura estritamente técnica, fica também a recomendação de uma plataforma que contém alguns livros sobre Data Science, que fundamentam, mais ou menos, os objetivos de cada análise: o <a href="https://leanpub.com/">Leanpub</a>. Tudo depende do que você está buscando.</p>
+<p>Alguns autores ou livros que acho interessantes para esse primeiro momento:</p>
+<ul>
+<li>Autores
+<ol style="list-style-type: decimal">
+<li><a href="https://leanpub.com/bookstore/book?search=roger%20d.%20peng">Roger D. Peng</a></li>
+<li><a href="https://leanpub.com/bookstore/book?search=brian%20caffo">Brian Caffo</a></li>
+<li><a href="https://leanpub.com/bookstore/book?search=leek">Jeffrey Leek</a></li>
+</ol></li>
+<li>Livros
+<ol style="list-style-type: decimal">
+<li><a href="https://leanpub.com/modernscientist">How to be a Modern Scientist</a></li>
+<li><a href="https://leanpub.com/datastyle">The Elements of Data Analytic Style</a></li>
+<li><a href="https://leanpub.com/LittleInferenceBook">Statistical inference for data science</a></li>
+<li><a href="https://leanpub.com/artofdatascience">The Art of Data Science</a></li>
+</ol></li>
+</ul>
+</div>
+
+    </article>
+
+
+    
+
+
+
+
+
+    
+    
+    
+        
+    
+
+
+
+
+<section id="articleNext" class="section nartrow">
+    <h3 class="footer-next-heading">More articles from Health Tech</h3>
+    <div class="footer-spacer"></div>
+    <div class="next-articles-grid" numberOfArticles={numberOfArticles}>
+        <div class="post-row">
+            
+                <a href="/ci%C3%AAncia-de-dados-ia-e-machine-learning-qual-%C3%A9-a-diferen%C3%A7a/" class="article-link"
+                 id="article-link-bigger">
+                    <div>
+                        <div class="image-container">
+                            <img src="/images/algoritmo.png" class="article-image" />
+                        </div>
+                        <div>
+                            <h2 class="article-title">
+                                Ciência de Dados, IA e Machine Learning - qual é a diferença?
+                            </h2>
+                            <p class="article-excerpt">
+                                Entendendo a diferença entre ciência de dados, inteligência artificial e aprendizado de máquina
+                            </p>
+                            <div class="article-metadata">
+                                June 6, 2020 · 3 min read
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            
+                <a href="/data-science-e-sa%C3%BAde/" class="article-link"
+                >
+                    <div>
+                        <div class="image-container">
+                            <img src="/images/man_brain.png" class="article-image" />
+                        </div>
+                        <div>
+                            <h2 class="article-title">
+                                Data Science e Saúde
+                            </h2>
+                            <p class="article-excerpt">
+                                O que é ciência de dados e como ela se relaciona com saúde?
+                            </p>
+                            <div class="article-metadata">
+                                June 6, 2020 · 4 min read
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            
+        </div>
+    </div>
+</section>
+
+</section>
+
+
+ <script src="/js/progressBar.js"></script>
+
+        
+        <div class="footer-gradient"></div>
+    <div class="section narrow">
+      <div class="footer-hr"></div>
+      <div class="footer-container">
+        <div class="footer-text">
+          © 2020 Health Tech
+        </div>
+        <div class="social-icon-outer">
+    <div class="social-icon-container">
+        
+    </div>
+</div>
+    </div>
+</div>
+
+    </div>
+
+    
+    <script src="/js/prism.js"></script>
+</body>
+
+</html>
