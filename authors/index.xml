@@ -6,10 +6,19 @@
     <description>Recent content in Authors on Health Tech</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 26 Jun 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 01 Aug 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/authors/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Lucas Menezes</title>
+      <link>/authors/lucas-menezes/</link>
+      <pubDate>Sat, 01 Aug 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/authors/lucas-menezes/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>Guilherme Almeida</title>
@@ -35,15 +44,6 @@
       <pubDate>Tue, 05 May 2020 00:00:00 +0000</pubDate>
       
       <guid>/authors/hermilio/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Lucas Menezes</title>
-      <link>/authors/lucas-menezes/</link>
-      <pubDate>Tue, 05 May 2020 00:00:00 +0000</pubDate>
-      
-      <guid>/authors/lucas-menezes/</guid>
       <description></description>
     </item>
     

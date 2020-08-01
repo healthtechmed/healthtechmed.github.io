@@ -6,10 +6,19 @@
     <description>Recent content in Posts on Health Tech</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 26 Jun 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 01 Aug 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Um pouco de números aos textos e um tanto de texto ao contexto</title>
+      <link>/um-pouco-de-n%C3%BAmeros-aos-textos-e-um-tanto-de-texto-ao-contexto/</link>
+      <pubDate>Sat, 01 Aug 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/um-pouco-de-n%C3%BAmeros-aos-textos-e-um-tanto-de-texto-ao-contexto/</guid>
+      <description>Introdução Bem, compreender as diferenças entre os termos e seus significados no data science é essencial para fundamentar tudo que virá depois disso. Seja entender as diferentes técnicas aplicadas em métodos de artigos científicos, ou na possibilidade de uso destas nos contextos de gestão hospitalar ou da medicina de precisão. As aplicações de ML, por exemplo, não estarão exaustivamente listadas em qualquer artigo, afinal, ela é, em si, uma área em desenvolvimento e suas aplicações se extenderão, de tempos em tempos, não só no contexto da medicina, como em outras áreas.</description>
+    </item>
     
     <item>
       <title>Ciência de Dados, IA e Machine Learning - qual é a diferença?</title>
